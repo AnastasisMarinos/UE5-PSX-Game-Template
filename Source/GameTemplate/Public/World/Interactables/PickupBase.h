@@ -1,32 +1,32 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos //
 
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InteractableBase.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/InteractionInterface.h"
-#include "Pickup.generated.h"
+#include "PickupBase.generated.h"
 
 struct FItemData;
 
 class UItemBase;
 
-
 UCLASS()
-class GAMETEMPLATE_API APickup : public AActor, public IInteractionInterface
+class GAMETEMPLATE_API APickupBase : public AInteractableBase
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+	APickupBase();
 	// FUNCTIONS //
-	APickup();
-
 	void InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int32 Quantity);
 	void InitializeDrop(UItemBase* ItemToDrop, const int32 Quantity);
 
 	virtual void BeginFocus() override;
 	virtual void EndFocus() override;
 
+	// GETTER FUNCTIONS //
 	FORCEINLINE UItemBase* GetItemData() { return ItemReference; }
 
 protected:
@@ -42,17 +42,18 @@ protected:
 	
 	// FUNCTIONS //
 	virtual void BeginPlay() override;
-	
+
 	virtual void Interact(APlayerCharacter* PlayerCharacter) override;
-	
-	void TakePickup(APlayerCharacter* Taker);
 
 	void UpdateInteractableData();
+
+	void TakePickup(APlayerCharacter* Taker);
 
 private:
 	// PROPERTIES & VARIABLES //
 	FInteractableData InstanceInteractableData;
-	
+
+	UPROPERTY()
 	UItemBase* ItemReference;
 
 protected:

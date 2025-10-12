@@ -97,9 +97,11 @@ public:
 
 	// SETTER FUNCTIONS //
 	UFUNCTION(Category = "Inventory")
-	FORCEINLINE void SetSlotCapacity(const int32 NewSlotsCapacity) { InventorySlotsCapacity = NewSlotsCapacity; };
+	FORCEINLINE void SetSlotCapacity(const int32 NewSlotsCapacity) { InventorySlotsCapacity = NewSlotsCapacity; }
 	UFUNCTION(Category = "Inventory")
-	FORCEINLINE void SetWeightCapacity(const float NewWeightCapacity) {InventoryWeightCapacity = NewWeightCapacity; };
+	FORCEINLINE void SetWeightCapacity(const float NewWeightCapacity) {InventoryWeightCapacity = NewWeightCapacity; }
+
+	FItemAddResult TransferItemTo(UInventoryComponent* TargetInventory, UItemBase* Item, int32 AmountToTransfer);
 	
 protected:
 	// PROPERTIES & VARIABLES //

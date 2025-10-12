@@ -1,76 +1,87 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos //
 
-#include "World/Pickup.h"
+#include "World/Interactables/PickupBase.h"
 
 #include "Components/InventoryComponent.h"
 #include "Player/PlayerCharacter.h"
 #include "Items/ItemBase.h"
 
-
-APickup::APickup()
+APickupBase::APickupBase()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = false; // This actor doesn’t need to tick every frame (performance optimization)
 
+	// Create the mesh component used to represent the pickup in the world
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("Pickup Mesh");
-	SetRootComponent(PickupMesh);
-	
+	SetRootComponent(PickupMesh); // Set mesh as root
+
+	// Configure collision: ignore most channels, but block visibility, camera, and world static for trace hits
 	PickupMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
-	PickupMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
-	PickupMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Block);
-	PickupMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
-	
+	PickupMesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	PickupMesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Block);
+	PickupMesh->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+
+	// Enable physics simulation for natural movement
 	PickupMesh->SetSimulatePhysics(true);
 	PickupMesh->SetLinearDamping(2.0f);
 	PickupMesh->SetAngularDamping(2.0f);
 }
 
-void APickup::BeginPlay()
+void APickupBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// Initialize the pickup with a default item type and quantity
 	InitializePickup(UItemBase::StaticClass(), ItemQuantity);
-	
 }
 
-void APickup::InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int32 Quantity)
+void APickupBase::InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int32 Quantity)
 {
+	// Load item data from data table if valid
 	if(!ItemRowHandle.IsNull())
 	{
 		const FItemData* ItemData = ItemRowHandle.GetRow<FItemData>(ItemRowHandle.RowName.ToString());
-		
+
+		// Create a new item object based on the data row
 		ItemReference = NewObject<UItemBase>(this, BaseClass);
-		
+
+		// Copy relevant data from data table row to runtime item
 		ItemReference->ID = ItemData->ID;
 		ItemReference->ItemType = ItemData->ItemType;
-		ItemReference->ItemQuality = ItemData-> ItemQuality;
+		ItemReference->ItemQuality = ItemData->ItemQuality;
 		ItemReference->ItemStatistics = ItemData->ItemStatistics;
 		ItemReference->ItemNumericData = ItemData->ItemNumericData;
 		ItemReference->ItemTextData = ItemData->ItemTextData;
 		ItemReference->ItemAssetData = ItemData->ItemAssetData;
 
+		// Determine if item can stack
 		ItemReference->ItemNumericData.bIsStackable = ItemData->ItemNumericData.MaxStackSize > 1;
 		Quantity <= 0 ? ItemReference->SetQuantity(1) : ItemReference->SetQuantity(Quantity);
 
+		// Update the pickup’s mesh to match the item
 		PickupMesh->SetStaticMesh(ItemData->ItemAssetData.Mesh);
 
+		// Update the interactable display data
 		UpdateInteractableData();
 	}
 }
 
-void APickup::InitializeDrop(UItemBase* ItemToDrop, const int32 Quantity)
+void APickupBase::InitializeDrop(UItemBase* ItemToDrop, const int32 Quantity)
 {
+	// Initialize pickup from an existing item instance (used when dropping from inventory)
 	ItemReference = ItemToDrop;
-	
+
 	Quantity <= 0 ? ItemReference->SetQuantity(1) : ItemReference->SetQuantity(Quantity);
 	ItemReference->ItemNumericData.Weight = ItemToDrop->GetItemSingleWeight();
-	ItemReference->OwningInventory = nullptr;
+	ItemReference->OwningInventory = nullptr; // No longer belongs to an inventory
+
 	PickupMesh->SetStaticMesh(ItemToDrop->ItemAssetData.Mesh);
-	
+
 	UpdateInteractableData();
 }
 
-void APickup::UpdateInteractableData()
+void APickupBase::UpdateInteractableData()
 {
+	// Sets the data that will appear in the interaction widget (UI prompt)
 	InstanceInteractableData.InteractableType = EInteractableType::Item;
 	InstanceInteractableData.Action = ItemReference->ItemTextData.InteractionText;
 	InstanceInteractableData.Name = ItemReference->ItemTextData.Name;
@@ -78,32 +89,37 @@ void APickup::UpdateInteractableData()
 	InteractableData = InstanceInteractableData;
 }
 
-void APickup::BeginFocus()
+void APickupBase::BeginFocus()
 {
+	// Enable outline/highlight when player looks at the pickup
 	if (PickupMesh)
 	{
 		PickupMesh->SetRenderCustomDepth(true);
 	}
 }
 
-void APickup::EndFocus()
+void APickupBase::EndFocus()
 {
+	// Disable highlight when player stops looking at the pickup
 	if (PickupMesh)
 	{
 		PickupMesh->SetRenderCustomDepth(false);
 	}
 }
 
-void APickup::Interact(APlayerCharacter* PlayerCharacter)
+void APickupBase::Interact(APlayerCharacter* PlayerCharacter)
 {
+	// Called when the player interacts (presses use)
 	if(PlayerCharacter)
 	{
 		TakePickup(PlayerCharacter);
+		Super::Interact(PlayerCharacter);
 	}
 }
 
-void APickup::TakePickup(APlayerCharacter* Taker)
+void APickupBase::TakePickup(APlayerCharacter* Taker)
 {
+	// Adds the pickup’s item to the player’s inventory and handles stack/overflow logic
 	if(!IsPendingKillPending())
 	{
 		if(ItemReference)
@@ -114,16 +130,17 @@ void APickup::TakePickup(APlayerCharacter* Taker)
 
 				switch (AddResult.OperationResult)
 				{
-				case EItemAddResult::IAR_NoItemAdded:
+				case IAR_NoItemAdded: // Inventory full or invalid
 					break;
-				case EItemAddResult::IAR_PartialAmountItemAdded:
+				case IAR_PartialAmountItemAdded: // Only part of stack added
 					UpdateInteractableData();
 					Taker->UpdateInteractionWidget();
 					break;
-				case EItemAddResult::IAR_AllItemAdded:
+				case IAR_AllItemAdded: // Entire stack successfully added
 					Destroy();
 					break;
 				}
+
 				UE_LOG(LogTemp, Warning, TEXT("%s"), *AddResult.ResultMessage.ToString());
 			}
 			else
@@ -133,13 +150,14 @@ void APickup::TakePickup(APlayerCharacter* Taker)
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pickup internal item refrence was null!"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pickup internal item reference was null!"));
 		}
 	}
 }
 
-#if WITH_EDITOR // Set static mesh (In Editor Only) from ItemDataStruct when selecting which item to spawn.
-void APickup::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+#if WITH_EDITOR
+// Editor-only: automatically updates mesh in editor when you change item row
+void APickupBase::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 

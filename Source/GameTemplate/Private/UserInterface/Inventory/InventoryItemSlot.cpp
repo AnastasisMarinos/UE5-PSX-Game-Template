@@ -26,7 +26,7 @@ void UInventoryItemSlot::NativeOnInitialized()
 	}
 	ItemInteractionBox->SetVisibility(ESlateVisibility::Collapsed);
 
-	SetIsFocusable(true);
+	SetIsFocusable(false);
 }
 
 void UInventoryItemSlot::NativeConstruct()

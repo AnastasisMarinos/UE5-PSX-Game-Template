@@ -11,7 +11,6 @@ class UInventoryComponent;
 class APlayerHUD;
 class UItemBase;
 
-
 UCLASS()
 class GAMETEMPLATE_API APlayerCharacter : public ACharacter
 {

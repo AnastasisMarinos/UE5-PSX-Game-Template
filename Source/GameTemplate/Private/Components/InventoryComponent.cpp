@@ -66,6 +66,39 @@ int32 UInventoryComponent::CalculateNumberForFullStack(UItemBase* StackableItem,
 	return FMath::Min(InitialRequestedAddAmount, AddAmountToMakeFullStack);
 }
 
+FItemAddResult UInventoryComponent::TransferItemTo(UInventoryComponent* TargetInventory, UItemBase* Item, int32 AmountToTransfer)
+{
+	if (!TargetInventory || !Item || AmountToTransfer <= 0)
+	{
+		return FItemAddResult::AddedNone(FText::FromString("Invalid transfer parameters."));
+	}
+
+	// Ensure we have enough quantity to transfer
+	if (AmountToTransfer > Item->Quantity)
+	{
+		AmountToTransfer = Item->Quantity;
+	}
+
+	// Create a temporary copy of the item to give to the target inventory
+	UItemBase* ItemCopy = Item->CreateItemCopy();
+	ItemCopy->SetQuantity(AmountToTransfer);
+
+	// Try to add the copy to the target inventory
+	const FItemAddResult AddResult = TargetInventory->HandleAddItem(ItemCopy);
+
+	// If target accepted all or part of it, remove that amount from this inventory
+	if (AddResult.OperationResult == EItemAddResult::IAR_AllItemAdded)
+	{
+		RemoveAmountOfItem(Item, AmountToTransfer);
+	}
+	else if (AddResult.OperationResult == EItemAddResult::IAR_PartialAmountItemAdded)
+	{
+		RemoveAmountOfItem(Item, AddResult.ActualAmountAdded);
+	}
+
+	return AddResult;	
+}
+
 void UInventoryComponent::RemoveSingleInstanceOfItem(UItemBase* ItemToRemove)
 {
 	InventoryContents.RemoveSingle(ItemToRemove);

@@ -59,9 +59,6 @@ void UInteractionComponent::PerformInteractionCheck()
 			}
 		}
 	}
-
-	//DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 2.0f);
-	
 	NoInteractableFound();
 }
 

@@ -61,16 +61,19 @@ void UInventoryWidget::RefreshInventory()
 	}
 }
 
-bool UInventoryWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
-	UDragDropOperation* InOperation)
+bool UInventoryWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
-	const UItemDragDropOperation* ItemDragDrop = Cast<UItemDragDropOperation>(InOperation);
+	UItemDragDropOperation* ItemDragDrop = Cast<UItemDragDropOperation>(InOperation);
+	if (!ItemDragDrop || !ItemDragDrop->SourceItem || !InventoryReference)
+		return false;
 
-	if(ItemDragDrop->SourceItem && InventoryReference)
-	{
-		// Returning true will stop the drop operation at this widget.
-		return true;
-	}
-	// Returning false will cause the drop operation to fall through to underlying widgets (if any)
-	return false;
+	UInventoryComponent* SourceInventory = ItemDragDrop->SourceInventory;
+	if (!SourceInventory || SourceInventory == InventoryReference)
+		return false;
+
+	UItemBase* SourceItem = ItemDragDrop->SourceItem;
+	FItemAddResult TransferResult = SourceInventory->TransferItemTo(InventoryReference, SourceItem, SourceItem->Quantity);
+
+	UE_LOG(LogTemp, Warning, TEXT("Item transferred to player inventory: %s"), *TransferResult.ResultMessage.ToString());
+	return TransferResult.OperationResult != EItemAddResult::IAR_NoItemAdded;
 }
