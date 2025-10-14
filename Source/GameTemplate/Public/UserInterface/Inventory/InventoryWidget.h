@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #pragma once
 

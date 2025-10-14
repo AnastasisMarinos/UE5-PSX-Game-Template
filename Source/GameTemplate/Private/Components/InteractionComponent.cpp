@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "Components/InteractionComponent.h"
 
@@ -7,7 +7,6 @@
 
 #include "Interfaces/InteractionInterface.h"
 #include "Kismet/GameplayStatics.h"
-
 
 UInteractionComponent::UInteractionComponent()
 {

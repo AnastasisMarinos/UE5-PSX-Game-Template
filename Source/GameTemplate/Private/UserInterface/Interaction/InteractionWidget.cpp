@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "UserInterface/Interaction/InteractionWidget.h"
 
@@ -6,7 +6,6 @@
 
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-
 
 void UInteractionWidget::NativeOnInitialized()
 {

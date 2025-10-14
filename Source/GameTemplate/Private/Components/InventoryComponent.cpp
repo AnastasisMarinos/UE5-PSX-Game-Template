@@ -1,8 +1,7 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "Components/InventoryComponent.h"
 #include "Items/ItemBase.h"
-
 
 UInventoryComponent::UInventoryComponent()
 {

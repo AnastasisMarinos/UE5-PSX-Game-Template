@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "UserInterface/PlayerWidget.h"
 #include "UserInterface/Inventory/ItemDragDropOperation.h"
@@ -8,7 +8,6 @@
 
 #include "Player/PlayerCharacter.h"
 #include "Items/ItemBase.h"
-
 
 void UPlayerWidget::NativeOnInitialized()
 {

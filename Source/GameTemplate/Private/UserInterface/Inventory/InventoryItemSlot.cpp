@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "UserInterface/Inventory/InventoryItemSlot.h"
 #include "UserInterface/Inventory/InventoryDragItem.h"
@@ -13,7 +13,6 @@
 
 #include "Items/ItemBase.h"
 #include "Player/PlayerCharacter.h"
-
 
 void UInventoryItemSlot::NativeOnInitialized()
 {

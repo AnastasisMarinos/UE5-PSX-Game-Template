@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "Player/PlayerCharacter.h"
 #include "Player/PlayerHUD.h"

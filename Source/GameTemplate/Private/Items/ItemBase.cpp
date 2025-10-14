@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "Items/ItemBase.h"
 #include "Items/ItemConsumable.h"

@@ -1,4 +1,4 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "UserInterface/Inventory/InventoryWidget.h"
 #include "UserInterface/Inventory/InventoryItemSlot.h"
@@ -10,7 +10,6 @@
 
 #include "Player/PlayerCharacter.h"
 #include "Items/ItemBase.h"
-
 
 void UInventoryWidget::NativeOnInitialized()
 {

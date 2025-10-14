@@ -1,11 +1,10 @@
-// (C) Anastasis Marinos 2025 //
+// © Anastasis Marinos 2025 //
 
 #include "UserInterface/Inventory/InventoryTooltip.h"
 #include "UserInterface/Inventory/InventoryItemSlot.h"
 
 #include "Components/TextBlock.h"
 #include "Items/ItemBase.h"
-
 
 void UInventoryTooltip::NativeConstruct()
 {

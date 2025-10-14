@@ -53,6 +53,9 @@ void APickupBase::InitializePickup(const TSubclassOf<UItemBase> BaseClass, const
 		ItemReference->ItemTextData = ItemData->ItemTextData;
 		ItemReference->ItemAssetData = ItemData->ItemAssetData;
 
+		InteractionAnim = ItemReference->ItemAssetData.InteractionAnim;
+		InteractionSound = ItemReference->ItemAssetData.InteractionSound;
+
 		// Determine if item can stack
 		ItemReference->ItemNumericData.bIsStackable = ItemData->ItemNumericData.MaxStackSize > 1;
 		Quantity <= 0 ? ItemReference->SetQuantity(1) : ItemReference->SetQuantity(Quantity);
