@@ -1,18 +1,20 @@
-# PSX First-Person Game Template (Unreal Engine)
+# PSX Game Template (Unreal Engine)
+
+![screenshot](Screenshots/GameTemplate_HeaderBanner.png)
+
+## Overview
 
 A fully-featured PlayStation-style first-person game template built in **Unreal Engine**, designed for rapid prototyping, learning, and professional game development.
 This project focuses on modularity, clarity, and production-ready systems—making it ideal for developers who want a strong foundation for PSX-inspired experiences.
-
----
-
-## ⭐ Overview
 
 This template includes a complete first-person controller, a modular inventory and interaction system, PSX-style rendering effects, UI frameworks, audio setups, and ready-to-extend gameplay features.
 All core systems are implemented primarily in C++, with Blueprint used only where it makes sense for rapid iteration and designer-friendly adjustments.
 
 ---
 
-## 🎮 Features
+![screenshot](Screenshots/GameTemplate_FeaturesBanner.png)
+
+## Features
 
 ### **Inventory System**
 
@@ -59,7 +61,7 @@ All core systems are implemented primarily in C++, with Blueprint used only wher
 
 ---
 
-## 🧩 How to Extend the Template
+## How to Extend the Template
 
 ### **Adding New Items**
 
@@ -71,7 +73,7 @@ Here you can define:
 * Properties & stats
 * Behavior on use
 
-## 📌 Planned Updates / Roadmap
+## Planned Updates / Roadmap
 
 * NPC interactions & dialogue
 * Landscape master material
@@ -81,7 +83,12 @@ Here you can define:
 
 ---
 
-## 🔧 Development Status
+## Development Status
 
 This project is under **active development**, with continuous improvements to systems, visuals, tools, and overall usability.
-A public download will be released once all placeholder or copyrighted assets from external packs have been replaced.
+
+## Contact
+
+- **https://anastasismarinos.com**
+
+---
