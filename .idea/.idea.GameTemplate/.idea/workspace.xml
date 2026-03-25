@@ -5,6 +5,7 @@
     <projectFile profileName="EpicGames.AspNet">../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.AspNet/EpicGames.AspNet.csproj</projectFile>
     <projectFile kind="Docker">../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj</projectFile>
+    <projectFile kind="Docker">../../../../../Program Files/Epic Games/UE_5.7/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/GameTemplate.vcxproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/UE5.vcxproj</projectFile>
   </component>
@@ -12,11 +13,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="201eb584-5516-4135-acb4-49c45dc4c17f" name="Changes" comment="" />
+    <list default="true" id="201eb584-5516-4135-acb4-49c45dc4c17f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameTemplate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vsconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.vsconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameTemplate.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/GameTemplate.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GameTemplate.Target.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GameTemplate.Target.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GameTemplate/GameTemplate.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GameTemplate/GameTemplate.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GameTemplateEditor.Target.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GameTemplateEditor.Target.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/GameTemplate/Private/Items/ItemConsumable.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -59,6 +70,8 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -530,6 +543,17 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="EpicGames.Perforce.Fixture/Dockerfile (1)" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="containerName" value="epicgames.perforce.fixture" />
+          <option name="contextFolderPath" value="C:\Users\anast\Documents\Unreal Projects\GameTemplate" />
+          <option name="sourceFilePath" value="../../../../../Program Files/Epic Games/UE_5.7/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/Dockerfile" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="EpicGames.Perforce.Fixture/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -594,6 +618,9 @@
       <workItem from="1754385356986" duration="291000" />
       <workItem from="1754389359956" duration="539000" />
       <workItem from="1754390528539" duration="18000" />
+      <workItem from="1774444122104" duration="161000" />
+      <workItem from="1774444335605" duration="146000" />
+      <workItem from="1774445044434" duration="381000" />
     </task>
     <servers />
   </component>
